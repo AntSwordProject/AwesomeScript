@@ -46,7 +46,7 @@ ChangeLog:
    3. 支持 base64 和 hex 编码
 -->
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" version="1.2">
-    <jsp:directive.page contentType="text/html" pageEncoding="GB2312" />
+    <jsp:directive.page contentType="text/html" pageEncoding="UTF-8" />
     <jsp:directive.page import="java.io.*"/>
     <jsp:directive.page import="java.util.*"/>
     <jsp:directive.page import="java.net.*"/>
@@ -64,7 +64,7 @@ ChangeLog:
         // String encoder = "base64"; //base64
         // String encoder = "hex";    //hex(推荐)
         // String encoder = "aes";         // aes(加密方式见下文aes配置)
-        String cs = "GB2312"; // 字符编码
+        String cs = "UTF-8"; // 字符编码
         // 解码器 4 选 1
         String decoder = "";
         // String decoder = "base64"; // base64 中文正常
@@ -89,7 +89,7 @@ ChangeLog:
         */
         // 注意: 以下4项为 encoder/decoder 共用
         // 如果需要请求和返回采用不同方式, 自行修改
-        String aes_mode = "CFB";            // EBC|ECB|CFB|
+        String aes_mode = "CFB";            // CBC|ECB|CFB|
         String aes_padding = "NoPadding";   // NoPadding|PKCS5Padding|PKCS7Padding
         int aes_keylen = 16;                // 16|32  // 16(AES-128) 32(AES-256)
         String aes_key_padding = "a";       // 获取到的 key 位数不够时填充字符
