@@ -339,13 +339,7 @@ Ver:1.5
 
     String asenc(String str, String decode){
         if(decode.equals("hex") || decode=="hex"){
-            String ret = "";
-            for (int i = 0; i < str.length(); i++) {
-                int ch = (int) str.charAt(i);
-                String s4 = Integer.toHexString(ch);
-                ret = ret + s4;
-            }
-            return ret;
+            return strtohexstr(str);
         }else if(decode.equals("base64") || decode == "base64"){
             String sb = "";
             sun.misc.BASE64Encoder encoder = new sun.misc.BASE64Encoder();
