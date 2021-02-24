@@ -146,8 +146,8 @@ function executeSQL($encode, $conf, $sql, $columnsep, $rowsep, $needcoluname){
         $password = $data[1];    
     }
     $encode = decode(EC($encode));
-	list($host, $port) = split(":", $host);
-	$port == "" ? $port = "3306" : $port;
+    list($host, $port) = split(":", $host);
+    $port == "" ? $port = "3306" : $port;
     $conn = @mysqli_connect($host, $user, $password, "", $port);
     $res = @mysqli_query($conn, $sql);
     if (is_bool($res)) {
