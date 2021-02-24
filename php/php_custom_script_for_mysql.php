@@ -24,7 +24,7 @@
 *  4. 本脚本中 encoder 与 AntSword 添加 Shell 时选择的 encoder 要一致，如果选择 default 则需要将 encoder 值设置为空
 *
 * ChangeLog:
-*	Data: 2021/02/24 v1.5
+*   Data: 2021/02/24 v1.5
 *    1. 修复 5.2.* 版本语法不兼容问题
 *
 *   Date: 2020/03/26 v1.4
